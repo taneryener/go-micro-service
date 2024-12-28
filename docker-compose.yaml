@@ -1,0 +1,10 @@
+services:
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./api/swagger_output/example_service/v1/example_service.swagger.json:/usr/share/nginx/html/swagger.json  # Adjusted path to match SWAGGER_JSON env
+    environment:
+      SWAGGER_JSON: "/usr/share/nginx/html/example_service.swagger.yaml"  # Use SWAGGER_JSON instead of example_service.swagger.json
+      URLS: "[{ url: '/swagger.json', name: 'TestStore' } ]"

@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package example_service.v1;
+
+import "google/api/annotations.proto";
+import "google/type/datetime.proto";
+import "validate/validate.proto";
+
+service ExampleService {
+  rpc Type(TypeRequest) returns (TypeResponse) {
+    option (google.api.http) = {
+        post: "/v1/example"
+        body: "*"
+    };
+  }
+}
+
+message TypeRequest {
+  uint64 id = 1 [(validate.rules).uint64.gt = 999];;
+}
+
+message TypeResponse {
+  Type type = 1;
+}
+
+message Type {
+  uint64 id = 1  [(validate.rules).uint64.gt = 0];
+  string name = 2  [(validate.rules).string = { min_len: 1}];
+  google.type.DateTime created_at = 3;
+}
